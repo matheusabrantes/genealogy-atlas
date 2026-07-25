@@ -1,6 +1,6 @@
-# Kinship Atlas
+# Genealogy Atlas
 
-Kinship Atlas is an open-source toolkit and public, privacy-aware web experience
+Genealogy Atlas is an open-source toolkit and public, privacy-aware web experience
 for exploring, validating, and documenting a family tree exported from
 FamilySearch.
 
@@ -96,7 +96,7 @@ npm audit --omit=dev --prefix web
 
 ## Data provenance
 
-Historical relationships shown by Kinship Atlas come from the imported
+Historical relationships shown by Genealogy Atlas come from the imported
 FamilySearch tree. Open research questions, such as an unconnected candidate
 relative, remain structurally separate until they are added to that tree.
 
