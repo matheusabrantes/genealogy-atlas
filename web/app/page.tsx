@@ -18,18 +18,18 @@ export const metadata: Metadata = {
 const number = new Intl.NumberFormat("pt-BR");
 
 const countryFlags: Record<string, string> = {
-  Alemanha: "/flags/de.svg",
-  Bélgica: "/flags/be.svg",
-  Brasil: "/flags/br.svg",
-  Espanha: "/flags/es.svg",
-  Escócia: "/flags/gb-sct.svg",
-  França: "/flags/fr.svg",
-  Inglaterra: "/flags/gb-eng.svg",
-  Itália: "/flags/it.svg",
-  Portugal: "/flags/pt.svg",
-  "País de Gales": "/flags/gb-wls.svg",
-  "Países Baixos": "/flags/nl.svg",
-  "Reino Unido": "/flags/gb.svg",
+  Alemanha: "/flags/germany.svg",
+  Bélgica: "/flags/belgium.svg",
+  Brasil: "/flags/brazil.svg",
+  Espanha: "/flags/spain.svg",
+  Escócia: "/flags/scotland.svg",
+  França: "/flags/france.svg",
+  Inglaterra: "/flags/england.svg",
+  Itália: "/flags/italy.svg",
+  Portugal: "/flags/portugal.svg",
+  "País de Gales": "/flags/wales.svg",
+  "Países Baixos": "/flags/netherlands.svg",
+  "Reino Unido": "/flags/united-kingdom.svg",
 };
 
 function GenerationRibbon() {

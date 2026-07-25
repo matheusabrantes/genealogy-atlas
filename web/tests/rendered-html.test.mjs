@@ -35,7 +35,16 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /Guilherme, o Conquistador/);
   assert.doesNotMatch(html, /Quem foi a mãe de Joana/);
   assert.match(html, /country-flag/);
-  for (const flag of ["fr", "pt", "es", "gb-eng", "nl", "gb-sct", "de", "it"]) {
+  for (const flag of [
+    "france",
+    "portugal",
+    "spain",
+    "england",
+    "netherlands",
+    "scotland",
+    "germany",
+    "italy",
+  ]) {
     assert.match(html, new RegExp(`/flags/${flag}\\.svg`));
   }
   assert.match(html, /Explorar a árvore/);
