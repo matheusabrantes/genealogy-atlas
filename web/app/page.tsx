@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { countryFlags } from "./country-flags";
 import summary from "../public/data/tree-summary.json";
 
 export const metadata: Metadata = {
@@ -16,21 +17,6 @@ export const metadata: Metadata = {
 };
 
 const number = new Intl.NumberFormat("pt-BR");
-
-const countryFlags: Record<string, string> = {
-  Alemanha: "/flags/germany.svg",
-  Bélgica: "/flags/belgium.svg",
-  Brasil: "/flags/brazil.svg",
-  Espanha: "/flags/spain.svg",
-  Escócia: "/flags/scotland.svg",
-  França: "/flags/france.svg",
-  Inglaterra: "/flags/england.svg",
-  Itália: "/flags/italy.svg",
-  Portugal: "/flags/portugal.svg",
-  "País de Gales": "/flags/wales.svg",
-  "Países Baixos": "/flags/netherlands.svg",
-  "Reino Unido": "/flags/united-kingdom.svg",
-};
 
 function GenerationRibbon() {
   const visible = summary.generationCounts.filter(
@@ -67,6 +53,7 @@ export default function Home() {
         </Link>
         <nav aria-label="Navegação principal">
           <a href="#panorama">Panorama</a>
+          <Link href="/lugares">Lugares</Link>
           <a href="#pessoas">Pessoas</a>
           <Link className="nav-action" href="/arvore">
             Abrir árvore
@@ -160,6 +147,10 @@ export default function Home() {
           Os grandes volumes europeus vêm sobretudo das ramificações medievais
           registradas na árvore colaborativa do FamilySearch.
         </p>
+        <Link className="places-link" href="/lugares">
+          Ver todos os países e filtrar por geração
+          <ArrowRight size={17} aria-hidden="true" />
+        </Link>
       </section>
 
       <section className="people-section" id="pessoas" aria-labelledby="people-title">

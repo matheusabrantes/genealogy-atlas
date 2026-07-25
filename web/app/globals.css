@@ -415,6 +415,17 @@ h1 {
 .country-track span { background: var(--primary); display: block; height: 100%; }
 .country-row strong { font-size: 0.875rem; font-variant-numeric: tabular-nums; text-align: right; }
 .source-warning { color: var(--muted); font-size: 0.78rem; margin: var(--space-4) 0 0 auto; max-width: 72ch; text-align: right; }
+.places-link {
+  align-items: center;
+  color: var(--primary);
+  display: inline-flex;
+  font-size: 0.86rem;
+  font-weight: 800;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  min-height: 44px;
+}
+.places-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .people-section {
   background: var(--primary);

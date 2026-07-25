@@ -1,6 +1,6 @@
 import unittest
 
-from mygenealogy.analytics import build_analytics
+from mygenealogy.analytics import build_analytics, build_places_explorer
 from mygenealogy.gedcom import parse_lines
 
 
@@ -67,6 +67,23 @@ class AnalyticsTests(unittest.TestCase):
         self.assertEqual(root["name"], "Matheus Abrantes")
         self.assertTrue(root["private"])
         self.assertEqual({node["name"] for node in other_private}, {"Pessoa privada"})
+
+    def test_builds_generation_aware_places_explorer(self):
+        summary, graph = build_analytics(
+            parse_lines(GEDCOM.splitlines()),
+            "TEST-ROOT",
+        )
+        places = build_places_explorer(summary, graph)
+
+        self.assertEqual(places["maxGeneration"], 2)
+        self.assertEqual(places["generationOptions"], [2, 4, 8, 12, 16, 24])
+        self.assertEqual(len(places["countries"]), 1)
+        self.assertEqual(places["countries"][0]["country"], "Brasil")
+        self.assertEqual(places["countries"][0]["people"], 1)
+        self.assertEqual(
+            places["countries"][0]["views"][0]["representatives"][0]["name"],
+            "Avô Falecido",
+        )
 
 
 if __name__ == "__main__":

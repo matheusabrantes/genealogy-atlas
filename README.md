@@ -68,7 +68,8 @@ python3 -m mygenealogy.analytics \
   --root-fsid ABCD-123 \
   --published-root-name "Matheus Abrantes" \
   --summary web/public/data/tree-summary.json \
-  --graph web/public/data/tree-graph.json
+  --graph web/public/data/tree-graph.json \
+  --places web/public/data/tree-places.json
 ```
 
 The generated files contain deceased historical people and anonymized nodes for

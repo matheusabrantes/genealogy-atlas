@@ -302,6 +302,77 @@ def build_analytics(
     return summary, graph
 
 
+def build_places_explorer(summary: dict, graph: dict) -> dict:
+    featured = {person["id"]: person for person in summary["featuredPeople"]}
+    max_generation = summary["maxGeneration"]
+    generation_options = [4, 8, 12, 16, 24, max_generation]
+    generation_options = sorted(set(generation_options))
+    countries = sorted(
+        {
+            country
+            for node in graph["nodes"]
+            for country in node["countries"]
+        }
+    )
+
+    def representative(node: dict) -> dict:
+        featured_person = featured.get(node["id"])
+        return {
+            "id": node["id"],
+            "name": featured_person["label"] if featured_person else node["name"],
+            "generation": node["generation"],
+            "birthYear": node["birthYear"],
+            "deathYear": node["deathYear"],
+            "sourceCount": node["sourceCount"],
+            "description": featured_person["description"] if featured_person else None,
+            "featured": bool(featured_person),
+            "private": node["private"],
+        }
+
+    country_entries = []
+    for country in countries:
+        country_nodes = [
+            node
+            for node in graph["nodes"]
+            if country in node["countries"] and not node["private"]
+        ]
+        views = []
+        for limit in generation_options:
+            visible = [node for node in country_nodes if node["generation"] <= limit]
+            visible.sort(
+                key=lambda node: (
+                    0 if node["id"] in featured else 1,
+                    featured.get(node["id"], {}).get("rank", 999),
+                    -node["sourceCount"],
+                    node["generation"],
+                    node["name"],
+                )
+            )
+            views.append(
+                {
+                    "maxGeneration": limit,
+                    "people": len(visible),
+                    "representatives": [
+                        representative(node) for node in visible[:5]
+                    ],
+                }
+            )
+        country_entries.append(
+            {
+                "country": country,
+                "people": len(country_nodes),
+                "views": views,
+            }
+        )
+
+    country_entries.sort(key=lambda item: (-item["people"], item["country"]))
+    return {
+        "maxGeneration": max_generation,
+        "generationOptions": generation_options,
+        "countries": country_entries,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create privacy-aware family-tree analytics")
     parser.add_argument("gedcom", type=Path)
@@ -312,6 +383,11 @@ def main() -> int:
     )
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--graph", type=Path, required=True)
+    parser.add_argument(
+        "--places",
+        type=Path,
+        help="Optional compact dataset for the public country and generation explorer.",
+    )
     args = parser.parse_args()
 
     summary, graph = build_analytics(
@@ -323,6 +399,17 @@ def main() -> int:
     args.graph.parent.mkdir(parents=True, exist_ok=True)
     args.summary.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.graph.write_text(json.dumps(graph, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    if args.places:
+        places = build_places_explorer(summary, graph)
+        args.places.parent.mkdir(parents=True, exist_ok=True)
+        args.places.write_text(
+            json.dumps(places, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+        print(
+            f"Wrote places explorer with {len(places['countries'])} countries "
+            f"to {args.places}"
+        )
     print(f"Wrote summary for {summary['reachableAncestors']} reachable people to {args.summary}")
     print(f"Wrote graph with {len(graph['nodes'])} nodes and {len(graph['edges'])} edges to {args.graph}")
     return 0

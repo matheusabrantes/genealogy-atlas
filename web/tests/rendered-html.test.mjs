@@ -47,7 +47,22 @@ test("renderiza a página inicial em pt-BR", async () => {
   ]) {
     assert.match(html, new RegExp(`/flags/${flag}\\.svg`));
   }
+  assert.match(html, /Ver todos os países e filtrar por geração/);
+  assert.match(html, /href="\/lugares"/);
   assert.match(html, /Explorar a árvore/);
+});
+
+test("oferece exploração completa de lugares por geração", async () => {
+  const response = await render("/lugares");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Lugares da árvore/);
+  assert.match(html, /Pesquisar país ou território/);
+  assert.match(html, />Geral</);
+  assert.match(html, />G4</);
+  assert.match(html, /França/);
+  assert.match(html, /Sacro Império Romano-Germânico/);
 });
 
 test("publica somente o nome autorizado da pessoa raiz", async () => {
@@ -67,4 +82,18 @@ test("publica somente o nome autorizado da pessoa raiz", async () => {
   );
   assert.ok(graph.nodes.length > 15_000);
   assert.ok(graph.edges.length > 19_000);
+});
+
+test("inclui todos os países conhecidos no explorador compacto", async () => {
+  const places = JSON.parse(
+    await readFile(new URL("../public/data/tree-places.json", import.meta.url), "utf8"),
+  );
+
+  assert.equal(places.countries.length, 22);
+  assert.deepEqual(places.generationOptions, [4, 8, 12, 16, 24, 32]);
+  assert.ok(
+    places.countries.every((country) =>
+      country.views.every((view) => view.representatives.length <= 5),
+    ),
+  );
 });
