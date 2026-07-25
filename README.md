@@ -94,13 +94,11 @@ npm test --prefix web
 npm audit --omit=dev --prefix web
 ```
 
-## Research standard
+## Data provenance
 
-FamilySearch is collaborative, so imported relationships are leads rather than
-proof. Kinship Atlas never writes back automatically. A relationship should be
-accepted only after comparing identities and attaching an original record or a
-reliable citation. Hypotheses remain visually and structurally separate from
-documented facts.
+Historical relationships shown by Kinship Atlas come from the imported
+FamilySearch tree. Open research questions, such as an unconnected candidate
+relative, remain structurally separate until they are added to that tree.
 
 ## Privacy
 

@@ -229,7 +229,7 @@ def build_analytics(records: List[Node], root_fsid: str) -> Tuple[dict, dict]:
                 "birthYear": _event_year(person, "BIRT"),
                 "deathYear": _event_year(person, "DEAT"),
                 "sourceCount": len(person.children_named("SOUR")),
-                "status": "Conexão importada — requer verificação documental",
+                "status": "Registrada na árvore do FamilySearch",
             }
         )
 

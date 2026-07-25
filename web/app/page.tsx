@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpenCheck,
-  CircleHelp,
   Globe2,
   Network,
   ShieldCheck,
@@ -137,7 +136,7 @@ export default function Home() {
         </div>
         <p className="source-warning">
           Os grandes volumes europeus vêm sobretudo das ramificações medievais
-          importadas do FamilySearch e ainda precisam de auditoria documental.
+          registradas na árvore colaborativa do FamilySearch.
         </p>
       </section>
 
@@ -148,8 +147,8 @@ export default function Home() {
             <h2 id="people-title">Conexões históricas em destaque</h2>
           </div>
           <p>
-            Pessoas reconhecíveis encontradas nas linhas importadas. Presença
-            no arquivo não equivale a parentesco comprovado.
+            Pessoas reconhecíveis encontradas nas linhas históricas da árvore
+            compartilhada pela família.
           </p>
         </div>
         <div className="people-list">
@@ -165,8 +164,8 @@ export default function Home() {
                 <span>{person.sourceCount} fontes</span>
               </div>
               <span className="status status-review">
-                <CircleHelp size={15} aria-hidden="true" />
-                A verificar
+                <Network size={15} aria-hidden="true" />
+                No FamilySearch
               </span>
             </article>
           ))}
@@ -231,8 +230,7 @@ export default function Home() {
         </div>
         <p>
           Construído a partir de uma fotografia privada da árvore colaborativa
-          do FamilySearch. Dados históricos podem conter erros e devem ser
-          confirmados em documentos originais.
+          do FamilySearch e apresentado aqui em uma experiência visual própria.
         </p>
       </footer>
     </main>
