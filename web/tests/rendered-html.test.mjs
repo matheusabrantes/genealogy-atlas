@@ -38,6 +38,9 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /Pessoas distintas com pelo menos um evento registrado no país/);
   assert.match(html, /3\.778/);
   assert.doesNotMatch(html, /7\.666/);
+  assert.match(html, /Papéis que atravessam a árvore/);
+  assert.match(html, /Realeza e nobreza/);
+  assert.match(html, /3\.007/);
   for (const flag of [
     "france",
     "portugal",
@@ -50,22 +53,25 @@ test("renderiza a página inicial em pt-BR", async () => {
   ]) {
     assert.match(html, new RegExp(`/flags/${flag}\\.svg`));
   }
-  assert.match(html, /Ver todos os países e filtrar por geração/);
+  assert.match(html, /Explorar países, papéis e ocupações/);
   assert.match(html, /href="\/lugares"/);
   assert.match(html, /Explorar a árvore/);
 });
 
-test("oferece exploração completa de lugares por geração", async () => {
+test("oferece dashboard de países e papéis por geração", async () => {
   const response = await render("/lugares");
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /Lugares da árvore/);
-  assert.match(html, /Pesquisar país ou território/);
+  assert.match(html, /Explorar a árvore/);
+  assert.match(html, /Pesquisar país, papel, ocupação ou pessoa/);
   assert.match(html, />Geral</);
   assert.match(html, />G4</);
   assert.match(html, /França/);
   assert.match(html, /Sacro Império Romano-Germânico/);
+  assert.match(html, /Papéis e ocupações/);
+  assert.match(html, /Ocupações e títulos específicos/);
+  assert.match(html, /Realeza e nobreza/);
 });
 
 test("publica somente o nome autorizado da pessoa raiz", async () => {
@@ -97,6 +103,15 @@ test("inclui todos os países conhecidos no explorador compacto", async () => {
   assert.ok(
     places.countries.every((country) =>
       country.views.every((view) => view.representatives.length <= 5),
+    ),
+  );
+  assert.equal(places.roleCategories.length, 9);
+  assert.ok(places.roleTerms.length > 20);
+  assert.equal(places.roleStats.peopleWithRecordedRoles, 4605);
+  assert.equal(places.roleStats.peopleClassified, 3423);
+  assert.ok(
+    [...places.roleCategories, ...places.roleTerms].every((entry) =>
+      entry.views.every((view) => view.representatives.length <= 5),
     ),
   );
 });

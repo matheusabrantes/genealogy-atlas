@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, MapPinned } from "lucide-react";
+import { ArrowLeft, PanelsTopLeft } from "lucide-react";
 import PlacesExplorer from "./places-explorer";
 
 export const metadata: Metadata = {
-  title: "Lugares da árvore",
+  title: "Explorar a árvore",
   description:
-    "Explore todos os países e territórios da árvore familiar por geração e descubra pessoas representativas de cada lugar.",
+    "Explore países, papéis, ocupações, títulos e pessoas da árvore familiar por geração.",
 };
 
 export default function PlacesPage() {
@@ -19,16 +19,16 @@ export default function PlacesPage() {
         </Link>
         <div className="places-title">
           <span className="places-title-icon" aria-hidden="true">
-            <MapPinned size={21} />
+            <PanelsTopLeft size={21} />
           </span>
           <div>
-            <p>Atlas familiar</p>
-            <h1>Lugares da árvore</h1>
+            <p>Dashboard familiar</p>
+            <h1>Explorar a árvore</h1>
           </div>
         </div>
         <p className="places-intro">
-          Veja onde aparecem eventos familiares, avance pelas gerações e abra
-          cada lugar para conhecer cinco pessoas de destaque.
+          Um único filtro para atravessar países, papéis, ocupações, títulos e
+          pessoas ao longo das gerações.
         </p>
       </header>
       <PlacesExplorer />

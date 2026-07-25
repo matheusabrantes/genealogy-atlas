@@ -329,13 +329,15 @@ h1 {
 }
 
 .countries-section,
+.roles-overview,
 .people-section {
   margin: 0 auto;
   max-width: 1480px;
   padding: var(--space-24) clamp(1rem, 5vw, 5rem);
 }
 
-.countries-section {
+.countries-section,
+.roles-overview {
   border-top: 1px solid var(--line);
 }
 
@@ -426,6 +428,66 @@ h1 {
   min-height: 44px;
 }
 .places-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.roles-ranking {
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.role-ranking-row {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 36px 40px minmax(220px, 0.72fr) minmax(160px, 1fr) 80px;
+  min-height: 82px;
+}
+
+.role-ranking-icon {
+  align-items: center;
+  background: var(--surface);
+  border-radius: 50%;
+  color: var(--primary);
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.role-ranking-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.role-ranking-copy strong { font-size: 0.95rem; }
+.role-ranking-copy small {
+  color: var(--muted);
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-ranking-track {
+  background: var(--surface-strong);
+  height: 7px;
+  overflow: hidden;
+}
+
+.role-ranking-track i {
+  background: var(--primary);
+  display: block;
+  height: 100%;
+}
+
+.role-ranking-count {
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
 
 .people-section {
   background: var(--primary);
@@ -608,6 +670,13 @@ footer p { color: var(--muted); font-size: 0.78rem; margin: 0; max-width: 70ch; 
   .generation-ribbon { gap: var(--space-2); }
   .country-row { grid-template-columns: 28px 1fr 64px; }
   .country-track { display: none; }
+  .role-ranking-row {
+    gap: var(--space-3);
+    grid-template-columns: 28px 36px 1fr 64px;
+    padding: var(--space-3) 0;
+  }
+  .role-ranking-track { display: none; }
+  .role-ranking-copy small { white-space: normal; }
   .person-row { align-items: start; grid-template-columns: 48px 1fr; padding: var(--space-6) 0; }
   .person-dates, .person-row .status { grid-column: 2; }
   .research-evidence { padding: var(--space-8) var(--space-6); }

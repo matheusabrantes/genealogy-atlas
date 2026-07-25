@@ -6,8 +6,10 @@ import {
   Network,
   ShieldCheck,
   Sparkles,
+  Tags,
 } from "lucide-react";
 import { countryFlags } from "./country-flags";
+import { RoleIcon } from "./role-icons";
 import places from "../public/data/tree-places.json";
 import summary from "../public/data/tree-summary.json";
 
@@ -41,6 +43,7 @@ function GenerationRibbon() {
 
 export default function Home() {
   const topCountry = places.countries[0]?.people ?? 1;
+  const topRole = places.roleCategories[0]?.people ?? 1;
   return (
     <main>
       <header className="site-header">
@@ -54,7 +57,7 @@ export default function Home() {
         </Link>
         <nav aria-label="Navegação principal">
           <a href="#panorama">Panorama</a>
-          <Link href="/lugares">Lugares</Link>
+          <Link href="/lugares">Explorar</Link>
           <a href="#pessoas">Pessoas</a>
           <Link className="nav-action" href="/arvore">
             Abrir árvore
@@ -149,7 +152,46 @@ export default function Home() {
           registradas na árvore colaborativa do FamilySearch.
         </p>
         <Link className="places-link" href="/lugares">
-          Ver todos os países e filtrar por geração
+          Explorar países, papéis e ocupações
+          <ArrowRight size={17} aria-hidden="true" />
+        </Link>
+      </section>
+
+      <section className="roles-overview" aria-labelledby="roles-overview-title">
+        <div className="section-heading">
+          <div>
+            <Tags size={24} aria-hidden="true" />
+            <h2 id="roles-overview-title">Papéis que atravessam a árvore</h2>
+          </div>
+          <p>
+            Pessoas distintas agrupadas por títulos, funções e ocupações
+            registradas. Uma pessoa pode aparecer em mais de uma categoria.
+          </p>
+        </div>
+        <div className="roles-ranking">
+          {places.roleCategories.slice(0, 5).map((role, index) => (
+            <div className="role-ranking-row" key={role.slug}>
+              <span className="country-rank">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="role-ranking-icon">
+                <RoleIcon category={role.slug} size={18} />
+              </span>
+              <span className="role-ranking-copy">
+                <strong>{role.label}</strong>
+                <small>{role.description}</small>
+              </span>
+              <span className="role-ranking-track" aria-hidden="true">
+                <i style={{ width: `${(role.people / topRole) * 100}%` }} />
+              </span>
+              <strong className="role-ranking-count">
+                {number.format(role.people)}
+              </strong>
+            </div>
+          ))}
+        </div>
+        <Link className="places-link" href="/lugares#papeis">
+          Ver ranking completo por geração
           <ArrowRight size={17} aria-hidden="true" />
         </Link>
       </section>

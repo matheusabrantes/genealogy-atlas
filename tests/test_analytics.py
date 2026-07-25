@@ -1,6 +1,10 @@
 import unittest
 
-from mygenealogy.analytics import build_analytics, build_places_explorer
+from mygenealogy.analytics import (
+    build_analytics,
+    build_places_explorer,
+    build_roles_explorer,
+)
 from mygenealogy.gedcom import parse_lines
 
 
@@ -23,6 +27,7 @@ GEDCOM = """0 HEAD
 2 PLAC Icó, Ceará, Brasil
 1 DEAT
 2 DATE 2024
+1 OCCU Ferreiro
 0 @F1@ FAM
 1 HUSB @I2@
 1 CHIL @I1@
@@ -83,6 +88,30 @@ class AnalyticsTests(unittest.TestCase):
         self.assertEqual(
             places["countries"][0]["views"][0]["representatives"][0]["name"],
             "Avô Falecido",
+        )
+
+    def test_builds_normalized_roles_explorer(self):
+        records = parse_lines(GEDCOM.splitlines())
+        summary, graph = build_analytics(records, "TEST-ROOT")
+        roles = build_roles_explorer(records, summary, graph)
+
+        self.assertEqual(roles["roleStats"]["peopleWithRecordedRoles"], 1)
+        self.assertEqual(roles["roleStats"]["peopleClassified"], 1)
+        trades = next(
+            item
+            for item in roles["roleCategories"]
+            if item["slug"] == "trades"
+        )
+        blacksmith = next(
+            item
+            for item in roles["roleTerms"]
+            if item["slug"] == "blacksmith"
+        )
+        self.assertEqual(trades["people"], 1)
+        self.assertEqual(blacksmith["people"], 1)
+        self.assertEqual(
+            blacksmith["views"][0]["representatives"][0]["roleTexts"],
+            ["Ferreiro"],
         )
 
 
