@@ -8,6 +8,8 @@ The current dataset follows one Brazilian family from Icó, Ceará, and the
 Paraíba backlands into historical branches across Europe. The public interface
 is written in Brazilian Portuguese so it can be shared with the family.
 
+**Live website:** [kinship-atlas.matheus-abrantes.chatgpt.site](https://kinship-atlas.matheus-abrantes.chatgpt.site)
+
 ## What it does
 
 - imports a read-only GEDCOM snapshot from FamilySearch through an optional,

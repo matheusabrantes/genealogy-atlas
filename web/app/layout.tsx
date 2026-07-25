@@ -8,13 +8,21 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL("https://kinship-atlas.matheus-abrantes.chatgpt.site"),
   title: {
     default: "Raízes Abrantes",
     template: "%s — Raízes Abrantes",
   },
   description:
     "Uma cartografia visual da família Abrantes, com gerações, lugares, fontes e pesquisas em andamento.",
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    title: "Raízes Abrantes",
+    description:
+      "Uma cartografia visual da família Abrantes, com gerações, lugares, fontes e pesquisas em andamento.",
+    url: "https://kinship-atlas.matheus-abrantes.chatgpt.site",
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
