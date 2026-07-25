@@ -46,16 +46,14 @@ function GenerationRibbon() {
 export default function Home() {
   const topCountry = places.countries[0]?.people ?? 1;
   const topRole = places.roleCategories[0]?.people ?? 1;
-  const historyHighlights = [
-    "inquisition-agents",
-    "templars",
-    "crusades",
-    "aljubarrota",
-    "norman-conquest",
-    "dutch-brazil",
-  ]
-    .map((slug) => places.historicalContexts.find((entry) => entry.slug === slug))
-    .filter((entry) => entry && entry.people > 0);
+  const historyHighlights = places.historicalContexts
+    .filter((entry) => entry.people > 0)
+    .sort(
+      (left, right) =>
+        right.people - left.people ||
+        left.label.localeCompare(right.label, "pt-BR"),
+    )
+    .slice(0, 6);
   return (
     <main>
       <header className="site-header">
@@ -184,21 +182,21 @@ export default function Home() {
           {historyHighlights.map((entry, index) => (
             <article
               className={index === 0 ? "history-highlight featured" : "history-highlight"}
-              key={entry!.slug}
+              key={entry.slug}
             >
               <span className="history-highlight-icon">
-                <HistoryIcon context={entry!.slug} size={index === 0 ? 28 : 20} />
+                <HistoryIcon context={entry.slug} size={index === 0 ? 28 : 20} />
               </span>
               <div>
                 <span>
-                  {entry!.kind} · {entry!.period}
+                  {entry.kind} · {entry.period}
                 </span>
-                <h3>{entry!.label}</h3>
-                {index === 0 && <p>{entry!.description}</p>}
+                <h3>{entry.label}</h3>
+                {index === 0 && <p>{entry.description}</p>}
                 {index === 0 && (
                   <div className="history-highlight-people">
                     <span>Perfis associados em destaque</span>
-                    {entry!.views
+                    {entry.views
                       .at(-1)
                       ?.representatives.slice(0, 4)
                       .map((person) => (
@@ -213,7 +211,7 @@ export default function Home() {
                   </div>
                 )}
               </div>
-              <strong>{number.format(entry!.people)}</strong>
+              <strong>{number.format(entry.people)}</strong>
               <small>perfis associados</small>
             </article>
           ))}

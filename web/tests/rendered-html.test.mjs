@@ -40,10 +40,13 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.doesNotMatch(html, /7\.666/);
   assert.match(html, /Papéis que atravessam a árvore/);
   assert.match(html, /A família dentro da História/);
-  assert.match(html, /Familiares e agentes do Santo Ofício/);
   assert.match(html, /Perfis associados em destaque/);
-  assert.match(html, /Brites Mendes de Vasconcelos/);
   assert.match(html, /Ordem dos Templários/);
+  assert.match(html, /Reconquista Ibérica/);
+  assert.ok(
+    html.indexOf("Cruzadas") < html.indexOf("Conquista Normanda"),
+    "a capa deve ordenar os destaques históricos por volume",
+  );
   assert.match(html, /Realeza e nobreza/);
   assert.match(html, /3\.007/);
   for (const flag of [
