@@ -41,6 +41,8 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /Papéis que atravessam a árvore/);
   assert.match(html, /A família dentro da História/);
   assert.match(html, /Familiares e agentes do Santo Ofício/);
+  assert.match(html, /Perfis associados em destaque/);
+  assert.match(html, /Brites Mendes de Vasconcelos/);
   assert.match(html, /Ordem dos Templários/);
   assert.match(html, /Realeza e nobreza/);
   assert.match(html, /3\.007/);

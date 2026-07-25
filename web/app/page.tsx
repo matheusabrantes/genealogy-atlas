@@ -195,6 +195,23 @@ export default function Home() {
                 </span>
                 <h3>{entry!.label}</h3>
                 {index === 0 && <p>{entry!.description}</p>}
+                {index === 0 && (
+                  <div className="history-highlight-people">
+                    <span>Perfis associados em destaque</span>
+                    {entry!.views
+                      .at(-1)
+                      ?.representatives.slice(0, 4)
+                      .map((person) => (
+                        <div key={person.id}>
+                          <strong>{person.name}</strong>
+                          <small>
+                            G{person.generation} · {person.birthYear ?? "?"}–
+                            {person.deathYear ?? "?"}
+                          </small>
+                        </div>
+                      ))}
+                  </div>
+                )}
               </div>
               <strong>{number.format(entry!.people)}</strong>
               <small>perfis associados</small>
