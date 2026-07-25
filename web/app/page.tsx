@@ -8,6 +8,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { countryFlags } from "./country-flags";
+import places from "../public/data/tree-places.json";
 import summary from "../public/data/tree-summary.json";
 
 export const metadata: Metadata = {
@@ -39,7 +40,7 @@ function GenerationRibbon() {
 }
 
 export default function Home() {
-  const topCountry = summary.countries[0]?.events ?? 1;
+  const topCountry = places.countries[0]?.people ?? 1;
   return (
     <main>
       <header className="site-header">
@@ -118,12 +119,12 @@ export default function Home() {
             <h2 id="countries-title">Lugares que aparecem na árvore</h2>
           </div>
           <p>
-            Contagem de eventos registrados — nascimento, batismo, casamento,
-            morte ou residência. Não representa nacionalidade.
+            Pessoas distintas com pelo menos um evento registrado no país.
+            Não representa nacionalidade.
           </p>
         </div>
         <div className="country-chart">
-          {summary.countries.slice(0, 8).map(({ country, events }, index) => (
+          {places.countries.slice(0, 8).map(({ country, people }, index) => (
             <div className="country-row" key={country}>
               <span className="country-rank">{String(index + 1).padStart(2, "0")}</span>
               <span className="country-name">
@@ -137,9 +138,9 @@ export default function Home() {
                 <span>{country}</span>
               </span>
               <div className="country-track" aria-hidden="true">
-                <span style={{ width: `${(events / topCountry) * 100}%` }} />
+                <span style={{ width: `${(people / topCountry) * 100}%` }} />
               </div>
-              <strong>{number.format(events)}</strong>
+              <strong>{number.format(people)}</strong>
             </div>
           ))}
         </div>

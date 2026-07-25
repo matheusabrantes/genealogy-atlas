@@ -35,6 +35,9 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /Guilherme, o Conquistador/);
   assert.doesNotMatch(html, /Quem foi a mãe de Joana/);
   assert.match(html, /country-flag/);
+  assert.match(html, /Pessoas distintas com pelo menos um evento registrado no país/);
+  assert.match(html, /3\.778/);
+  assert.doesNotMatch(html, /7\.666/);
   for (const flag of [
     "france",
     "portugal",
