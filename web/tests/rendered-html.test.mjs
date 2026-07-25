@@ -76,6 +76,14 @@ test("oferece dashboard de países, história e papéis por geração", async ()
   assert.match(html, /Ordens e acontecimentos históricos/);
   assert.match(html, /Inquisição e Santo Ofício/);
   assert.match(html, /Batalha de Aljubarrota/);
+  assert.ok(
+    html.indexOf("Cruzadas") < html.indexOf("Conquista Normanda"),
+    "contextos históricos devem aparecer em ordem decrescente de pessoas",
+  );
+  assert.ok(
+    html.indexOf("Conquista Normanda") < html.indexOf("Reconquista Ibérica"),
+    "o ranking deve manter a ordenação decrescente",
+  );
   assert.match(html, /Ocupações e títulos específicos/);
   assert.match(html, /Realeza e nobreza/);
 });

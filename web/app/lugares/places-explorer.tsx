@@ -193,6 +193,11 @@ export default function PlacesExplorer() {
               [entry.label, entry.description],
               entry.current.representatives,
             ),
+        )
+        .sort(
+          (left, right) =>
+            right.current.people - left.current.people ||
+            left.label.localeCompare(right.label, "pt-BR"),
         ),
     [maxGeneration, normalizedQuery],
   );
@@ -212,6 +217,11 @@ export default function PlacesExplorer() {
               [entry.label, entry.categoryLabel],
               entry.current.representatives,
             ),
+        )
+        .sort(
+          (left, right) =>
+            right.current.people - left.current.people ||
+            left.label.localeCompare(right.label, "pt-BR"),
         ),
     [maxGeneration, normalizedQuery],
   );
@@ -231,6 +241,11 @@ export default function PlacesExplorer() {
               [entry.label, entry.kind, entry.period, entry.description],
               entry.current.representatives,
             ),
+        )
+        .sort(
+          (left, right) =>
+            right.current.people - left.current.people ||
+            left.label.localeCompare(right.label, "pt-BR"),
         ),
     [maxGeneration, normalizedQuery],
   );
@@ -403,7 +418,7 @@ export default function PlacesExplorer() {
 
         {historicalContexts.length ? (
           <div className="history-grid">
-            {historicalContexts.map((entry) => {
+            {historicalContexts.map((entry, index) => {
               const key = `history:${entry.slug}`;
               const isOpen = openItem === key;
               return (
@@ -416,6 +431,9 @@ export default function PlacesExplorer() {
                     onClick={() => toggle(key)}
                     type="button"
                   >
+                    <span className="place-position">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     <span className="history-card-icon">
                       <HistoryIcon context={entry.slug} size={21} />
                     </span>
