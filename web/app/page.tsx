@@ -7,18 +7,6 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
-import flagBelgium from "flag-icons/flags/4x3/be.svg?url";
-import flagBrazil from "flag-icons/flags/4x3/br.svg?url";
-import flagGermany from "flag-icons/flags/4x3/de.svg?url";
-import flagSpain from "flag-icons/flags/4x3/es.svg?url";
-import flagFrance from "flag-icons/flags/4x3/fr.svg?url";
-import flagUnitedKingdom from "flag-icons/flags/4x3/gb.svg?url";
-import flagEngland from "flag-icons/flags/4x3/gb-eng.svg?url";
-import flagScotland from "flag-icons/flags/4x3/gb-sct.svg?url";
-import flagWales from "flag-icons/flags/4x3/gb-wls.svg?url";
-import flagItaly from "flag-icons/flags/4x3/it.svg?url";
-import flagNetherlands from "flag-icons/flags/4x3/nl.svg?url";
-import flagPortugal from "flag-icons/flags/4x3/pt.svg?url";
 import summary from "../public/data/tree-summary.json";
 
 export const metadata: Metadata = {
@@ -30,18 +18,18 @@ export const metadata: Metadata = {
 const number = new Intl.NumberFormat("pt-BR");
 
 const countryFlags: Record<string, string> = {
-  Alemanha: flagGermany,
-  Bélgica: flagBelgium,
-  Brasil: flagBrazil,
-  Espanha: flagSpain,
-  Escócia: flagScotland,
-  França: flagFrance,
-  Inglaterra: flagEngland,
-  Itália: flagItaly,
-  Portugal: flagPortugal,
-  "País de Gales": flagWales,
-  "Países Baixos": flagNetherlands,
-  "Reino Unido": flagUnitedKingdom,
+  Alemanha: "/flags/de.svg",
+  Bélgica: "/flags/be.svg",
+  Brasil: "/flags/br.svg",
+  Espanha: "/flags/es.svg",
+  Escócia: "/flags/gb-sct.svg",
+  França: "/flags/fr.svg",
+  Inglaterra: "/flags/gb-eng.svg",
+  Itália: "/flags/it.svg",
+  Portugal: "/flags/pt.svg",
+  "País de Gales": "/flags/gb-wls.svg",
+  "Países Baixos": "/flags/nl.svg",
+  "Reino Unido": "/flags/gb.svg",
 };
 
 function GenerationRibbon() {
