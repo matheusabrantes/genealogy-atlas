@@ -3,12 +3,14 @@ import Link from "next/link";
 import {
   ArrowRight,
   Globe2,
+  Landmark,
   Network,
   ShieldCheck,
   Sparkles,
   Tags,
 } from "lucide-react";
 import { countryFlags } from "./country-flags";
+import { HistoryIcon } from "./history-icons";
 import { RoleIcon } from "./role-icons";
 import places from "../public/data/tree-places.json";
 import summary from "../public/data/tree-summary.json";
@@ -44,6 +46,16 @@ function GenerationRibbon() {
 export default function Home() {
   const topCountry = places.countries[0]?.people ?? 1;
   const topRole = places.roleCategories[0]?.people ?? 1;
+  const historyHighlights = [
+    "inquisition-agents",
+    "templars",
+    "crusades",
+    "aljubarrota",
+    "norman-conquest",
+    "dutch-brazil",
+  ]
+    .map((slug) => places.historicalContexts.find((entry) => entry.slug === slug))
+    .filter((entry) => entry && entry.people > 0);
   return (
     <main>
       <header className="site-header">
@@ -153,6 +165,44 @@ export default function Home() {
         </p>
         <Link className="places-link" href="/lugares">
           Explorar países, papéis e ocupações
+          <ArrowRight size={17} aria-hidden="true" />
+        </Link>
+      </section>
+
+      <section className="history-overview" aria-labelledby="history-overview-title">
+        <div className="history-overview-heading">
+          <div>
+            <Landmark size={24} aria-hidden="true" />
+            <h2 id="history-overview-title">A família dentro da História</h2>
+          </div>
+          <p>
+            Ordens, conflitos e instituições que aparecem associados aos
+            perfis desta árvore.
+          </p>
+        </div>
+        <div className="history-overview-list">
+          {historyHighlights.map((entry, index) => (
+            <article
+              className={index === 0 ? "history-highlight featured" : "history-highlight"}
+              key={entry!.slug}
+            >
+              <span className="history-highlight-icon">
+                <HistoryIcon context={entry!.slug} size={index === 0 ? 28 : 20} />
+              </span>
+              <div>
+                <span>
+                  {entry!.kind} · {entry!.period}
+                </span>
+                <h3>{entry!.label}</h3>
+                {index === 0 && <p>{entry!.description}</p>}
+              </div>
+              <strong>{number.format(entry!.people)}</strong>
+              <small>perfis associados</small>
+            </article>
+          ))}
+        </div>
+        <Link className="places-link history-overview-link" href="/lugares#historia">
+          Explorar acontecimentos, ordens e Inquisição
           <ArrowRight size={17} aria-hidden="true" />
         </Link>
       </section>

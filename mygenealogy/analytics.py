@@ -185,6 +185,126 @@ ROLE_DEFINITIONS = [
     ("arts-knowledge", "Artes e conhecimento", "knowledge-medicine", r"\b(professor|teacher|poet|poeta|escritor|writer|painter|pintor|musician|musico|artist|artista|scientist|cientista|astronom\w*|mathematic\w*)\b"),
 ]
 
+HISTORICAL_CONTEXTS = [
+    {
+        "slug": "inquisition-agents",
+        "label": "Familiares e agentes do Santo Ofício",
+        "kind": "instituição",
+        "period": "séculos XVI–XVIII",
+        "description": "Menções explícitas a familiares, inquisidores, comissários e outros colaboradores do Santo Ofício em registros associados aos perfis.",
+        "pattern": r"\b(familiar(?:es)? do santo oficio|inquisidor(?:es)?|comissari\w* do santo oficio|qualificador(?:es)? do santo oficio|meirinho(?:s)? do santo oficio|agente(?:s)? da inquisicao|olheiro(?:s)? da inquisicao)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "inquisition",
+        "label": "Inquisição e Santo Ofício",
+        "kind": "instituição",
+        "period": "séculos XV–XIX",
+        "description": "Perfis com registros ligados a habilitações, depoimentos, processos ou atuação da Inquisição.",
+        "pattern": r"\b(inquisicao|inquisition|santo oficio|holy office|inquisidor\w*)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "templars",
+        "label": "Ordem dos Templários",
+        "kind": "ordem",
+        "period": "c. 1119–1312",
+        "description": "Cavaleiros e mestres explicitamente associados à Ordem do Templo ou aos Templários.",
+        "pattern": r"\b(templari\w*|templar\w*|ordem do templo|order of the temple|knights? of the temple)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "order-christ",
+        "label": "Ordem de Cristo",
+        "kind": "ordem",
+        "period": "desde 1319",
+        "description": "Mestres, comendadores e cavaleiros ligados à ordem militar portuguesa.",
+        "pattern": r"\b(ordem de cristo|ordem de christo|order of christ)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "order-avis",
+        "label": "Ordem de Avis",
+        "kind": "ordem",
+        "period": "séculos XII–XIX",
+        "description": "Mestres, comendadores e cavaleiros associados à Ordem de Avis.",
+        "pattern": r"\b(ordem de avis|order of avis)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "order-santiago",
+        "label": "Ordem de Santiago",
+        "kind": "ordem",
+        "period": "desde 1170",
+        "description": "Mestres, comendadores e cavaleiros associados à Ordem de Santiago.",
+        "pattern": r"\b(ordem de santiago|order of santiago|orden de santiago)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "order-hospital",
+        "label": "Ordem do Hospital",
+        "kind": "ordem",
+        "period": "desde c. 1099",
+        "description": "Pessoas ligadas aos Hospitalários, ao Priorado do Crato ou à Ordem de Malta.",
+        "pattern": r"\b(ordem do hospital|order of (?:the )?hospital|hospitalari\w*|knights? hospitaller|ordem de malta|order of malta|prior do crato)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "crusades",
+        "label": "Cruzadas",
+        "kind": "acontecimento",
+        "period": "1095–1291",
+        "description": "Cruzados e participantes explicitamente relacionados às campanhas no Mediterrâneo e no Oriente.",
+        "pattern": r"\b(cruzad\w*|crusad\w*|croisad\w*)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "reconquista",
+        "label": "Reconquista Ibérica",
+        "kind": "acontecimento",
+        "period": "séculos VIII–XV",
+        "description": "Perfis associados às campanhas e conquistas cristãs na Península Ibérica.",
+        "pattern": r"\b(reconquista|reconquest|conquista de (?:lisboa|santarem|silves|faro|coimbra)|conquest of (?:lisbon|santarem|silves|faro|coimbra))\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "aljubarrota",
+        "label": "Batalha de Aljubarrota",
+        "kind": "acontecimento",
+        "period": "1385",
+        "description": "Pessoas registradas em ligação com a batalha decisiva para a independência portuguesa.",
+        "pattern": r"\b(aljubarrota)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "hundred-years-war",
+        "label": "Guerra dos Cem Anos",
+        "kind": "acontecimento",
+        "period": "1337–1453",
+        "description": "Monarcas, nobres e militares associados ao longo conflito entre Inglaterra e França.",
+        "pattern": r"\b(guerra dos cem anos|hundred years(?:'|’) war|guerre de cent ans)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "norman-conquest",
+        "label": "Conquista Normanda",
+        "kind": "acontecimento",
+        "period": "1066",
+        "description": "Pessoas registradas em ligação com a conquista normanda da Inglaterra.",
+        "pattern": r"\b(conquista normanda|norman conquest|batalha de hastings|battle of hastings)\b",
+        "directOnly": False,
+    },
+    {
+        "slug": "dutch-brazil",
+        "label": "Guerras luso-holandesas no Brasil",
+        "kind": "acontecimento",
+        "period": "século XVII",
+        "description": "Pessoas ligadas às invasões holandesas e à restauração de Pernambuco e capitanias vizinhas.",
+        "pattern": r"\b(guerra hollandesa|guerra holandesa|dutch.brazilian war|invas\w* holandes\w*|restauracao pernambucana|guerra da restauracao|batalha dos guarapes|batalha de tabocas)\b",
+        "directOnly": False,
+    },
+]
+
 
 def _year(value: str) -> Optional[int]:
     match = YEAR_RE.search(value or "")
@@ -211,6 +331,35 @@ def _role_texts(person: Node) -> List[str]:
             if node.value.strip()
         )
     return values
+
+
+def _node_text(node: Node) -> str:
+    return " ".join(
+        part.strip()
+        for part in (item.value for item in node.walk())
+        if part.strip() and not (part.startswith("@") and part.endswith("@"))
+    )
+
+
+def _historical_texts(person: Node, notes_by_id: Dict[str, Node]) -> List[dict]:
+    evidence = []
+    for tag in ("OCCU", "TITL", "RELI", "FACT", "EVEN"):
+        for node in person.children_named(tag):
+            text = _node_text(node)
+            if text:
+                evidence.append(
+                    {
+                        "text": text,
+                        "direct": tag in {"OCCU", "TITL", "RELI"},
+                        "tag": tag,
+                    }
+                )
+    for node in person.children_named("NOTE"):
+        resolved = notes_by_id.get(node.value)
+        text = _node_text(resolved) if resolved else _node_text(node)
+        if text:
+            evidence.append({"text": text, "direct": False, "tag": "NOTE"})
+    return evidence
 
 
 def _country(place: str) -> Optional[str]:
@@ -599,6 +748,150 @@ def build_roles_explorer(records: List[Node], summary: dict, graph: dict) -> dic
     }
 
 
+def build_history_explorer(records: List[Node], summary: dict, graph: dict) -> dict:
+    featured = {person["id"]: person for person in summary["featuredPeople"]}
+    generation_options = sorted(
+        set([4, 8, 12, 16, 24, summary["maxGeneration"]])
+    )
+    people_by_id = {
+        person.text("_FSFTID") or person.xref.strip("@"): person
+        for person in records
+        if person.tag == "INDI" and person.xref
+    }
+    notes_by_id = {
+        note.xref: note
+        for note in records
+        if note.tag == "NOTE" and note.xref
+    }
+
+    profiles = []
+    for node in graph["nodes"]:
+        if node["private"]:
+            continue
+        person = people_by_id.get(node["id"])
+        if not person:
+            continue
+        evidence = _historical_texts(person, notes_by_id)
+        featured_person = featured.get(node["id"])
+        if featured_person and featured_person.get("description"):
+            evidence.append(
+                {
+                    "text": featured_person["description"],
+                    "direct": False,
+                    "tag": "SUMMARY",
+                }
+            )
+        matches = {}
+        for context in HISTORICAL_CONTEXTS:
+            matched = [
+                item
+                for item in evidence
+                if (item["direct"] or not context["directOnly"])
+                and (
+                    not context.get("allowedTags")
+                    or item["tag"] in context["allowedTags"]
+                )
+                and re.search(
+                    context["pattern"],
+                    _normalize_role_text(item["text"]),
+                )
+            ]
+            if matched:
+                matches[context["slug"]] = matched
+        if matches:
+            profiles.append({"node": node, "matches": matches})
+
+    def representative(profile: dict, context_slug: str) -> dict:
+        node = profile["node"]
+        featured_person = featured.get(node["id"])
+        matched = profile["matches"][context_slug]
+        excerpts = []
+        for item in matched:
+            compact = " ".join(item["text"].split())
+            if len(compact) > 220:
+                compact = f"{compact[:217].rstrip()}…"
+            if compact not in excerpts:
+                excerpts.append(compact)
+            if len(excerpts) == 2:
+                break
+        return {
+            "id": node["id"],
+            "name": featured_person["label"] if featured_person else node["name"],
+            "generation": node["generation"],
+            "birthYear": node["birthYear"],
+            "deathYear": node["deathYear"],
+            "sourceCount": node["sourceCount"],
+            "description": featured_person["description"] if featured_person else None,
+            "featured": bool(featured_person),
+            "private": node["private"],
+            "roleTexts": excerpts,
+            "association": (
+                "Registro em título ou função"
+                if any(item["direct"] for item in matched)
+                else "Menção em nota associada"
+            ),
+        }
+
+    entries = []
+    for context in HISTORICAL_CONTEXTS:
+        selected = [
+            profile
+            for profile in profiles
+            if context["slug"] in profile["matches"]
+        ]
+        views = []
+        for limit in generation_options:
+            visible = [
+                profile
+                for profile in selected
+                if profile["node"]["generation"] <= limit
+            ]
+            visible.sort(
+                key=lambda profile: (
+                    0 if profile["node"]["id"] in featured else 1,
+                    0
+                    if any(
+                        item["direct"]
+                        for item in profile["matches"][context["slug"]]
+                    )
+                    else 1,
+                    featured.get(profile["node"]["id"], {}).get("rank", 999),
+                    -profile["node"]["sourceCount"],
+                    profile["node"]["generation"],
+                    profile["node"]["name"],
+                )
+            )
+            views.append(
+                {
+                    "maxGeneration": limit,
+                    "people": len(visible),
+                    "representatives": [
+                        representative(profile, context["slug"])
+                        for profile in visible[:5]
+                    ],
+                }
+            )
+        entries.append(
+            {
+                key: value
+                for key, value in context.items()
+                if key not in {"pattern", "directOnly", "allowedTags"}
+            }
+            | {
+                "people": len(selected),
+                "views": views,
+            }
+        )
+
+    return {
+        "historyStats": {
+            "peopleAssociated": len(profiles),
+            "contexts": sum(1 for entry in entries if entry["people"] > 0),
+        },
+        "historicalContexts": entries,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create privacy-aware family-tree analytics")
     parser.add_argument("gedcom", type=Path)
@@ -629,6 +922,7 @@ def main() -> int:
     if args.places:
         places = build_places_explorer(summary, graph)
         places.update(build_roles_explorer(records, summary, graph))
+        places.update(build_history_explorer(records, summary, graph))
         args.places.parent.mkdir(parents=True, exist_ok=True)
         args.places.write_text(
             json.dumps(places, ensure_ascii=False, separators=(",", ":")),

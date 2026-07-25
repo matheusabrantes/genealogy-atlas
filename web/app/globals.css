@@ -329,6 +329,7 @@ h1 {
 }
 
 .countries-section,
+.history-overview,
 .roles-overview,
 .people-section {
   margin: 0 auto;
@@ -428,6 +429,113 @@ h1 {
   min-height: 44px;
 }
 .places-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.history-overview {
+  background: oklch(0.18 0.032 174);
+  color: var(--white);
+  max-width: none;
+}
+
+.history-overview-heading {
+  align-items: start;
+  display: grid;
+  gap: var(--space-8);
+  grid-template-columns: 1fr minmax(280px, 0.75fr);
+  margin: 0 auto var(--space-12);
+  max-width: 1320px;
+}
+
+.history-overview-heading > div {
+  align-items: center;
+  display: flex;
+  gap: var(--space-4);
+}
+
+.history-overview-heading svg { color: var(--primary-bright); }
+.history-overview-heading h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+.history-overview-heading > p {
+  color: oklch(0.82 0.02 174);
+  margin: 0;
+  max-width: 48ch;
+}
+
+.history-overview-list {
+  border-bottom: 1px solid oklch(0.42 0.035 174);
+  display: grid;
+  grid-template-columns: minmax(280px, 1.1fr) repeat(2, minmax(220px, 0.7fr));
+  margin: 0 auto;
+  max-width: 1320px;
+}
+
+.history-highlight {
+  align-items: center;
+  border-top: 1px solid oklch(0.42 0.035 174);
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  min-height: 116px;
+  padding: var(--space-5);
+}
+
+.history-highlight:not(.featured):nth-child(odd) {
+  border-left: 1px solid oklch(0.42 0.035 174);
+}
+
+.history-highlight.featured {
+  align-content: center;
+  border-right: 1px solid oklch(0.42 0.035 174);
+  grid-row: span 3;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  padding: var(--space-8);
+}
+
+.history-highlight-icon {
+  align-items: center;
+  background: oklch(0.32 0.065 174);
+  border-radius: 50%;
+  color: var(--white);
+  display: flex;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+.history-highlight.featured .history-highlight-icon {
+  background: var(--primary-bright);
+  color: oklch(0.15 0.03 174);
+  height: 54px;
+  width: 54px;
+}
+.history-highlight > div > span {
+  color: oklch(0.75 0.025 174);
+  font-size: 0.65rem;
+  text-transform: capitalize;
+}
+.history-highlight h3 { font-size: 1rem; margin: var(--space-1) 0 0; }
+.history-highlight.featured h3 { font-size: 1.45rem; }
+.history-highlight p {
+  color: oklch(0.8 0.02 174);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin: var(--space-3) 0 0;
+}
+.history-highlight > strong { font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+.history-highlight > small {
+  color: oklch(0.72 0.02 174);
+  font-size: 0.6rem;
+  grid-column: 3;
+  text-align: right;
+}
+.history-overview-link {
+  color: var(--primary-bright);
+  margin: var(--space-8) auto 0;
+  max-width: 1320px;
+}
 
 .roles-ranking {
   border-bottom: 1px solid var(--line);
@@ -653,6 +761,13 @@ footer p { color: var(--muted); font-size: 0.78rem; margin: 0; max-width: 70ch; 
   .hero { min-height: 0; }
   .hero-data { min-height: 520px; }
   .section-heading { grid-template-columns: 1fr; }
+  .history-overview-heading { grid-template-columns: 1fr; }
+  .history-overview-list { grid-template-columns: 1fr 1fr; }
+  .history-highlight.featured {
+    border-right: 0;
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
   .person-row { grid-template-columns: 56px 1fr 130px; }
   .person-row .status { grid-column: 2 / -1; }
   .graph-orbit { margin: 0 auto; max-width: 360px; }
@@ -670,6 +785,19 @@ footer p { color: var(--muted); font-size: 0.78rem; margin: 0; max-width: 70ch; 
   .generation-ribbon { gap: var(--space-2); }
   .country-row { grid-template-columns: 28px 1fr 64px; }
   .country-track { display: none; }
+  .history-overview-list { grid-template-columns: 1fr; }
+  .history-highlight,
+  .history-highlight.featured {
+    border-left: 0 !important;
+    grid-column: auto;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    padding: var(--space-5) 0;
+  }
+  .history-highlight.featured .history-highlight-icon {
+    height: 42px;
+    width: 42px;
+  }
+  .history-highlight.featured h3 { font-size: 1.1rem; }
   .role-ranking-row {
     gap: var(--space-3);
     grid-template-columns: 28px 36px 1fr 64px;

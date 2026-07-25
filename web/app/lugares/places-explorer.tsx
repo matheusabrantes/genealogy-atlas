@@ -5,11 +5,13 @@ import {
   ChevronDown,
   ExternalLink,
   Globe2,
+  Landmark,
   Search,
   Sparkles,
   Tags,
 } from "lucide-react";
 import { countryFlags } from "../country-flags";
+import { HistoryIcon } from "../history-icons";
 import { RoleIcon } from "../role-icons";
 import explorer from "../../public/data/tree-places.json";
 import "./places.css";
@@ -25,6 +27,7 @@ type Representative = {
   featured: boolean;
   private: boolean;
   roleTexts?: string[];
+  association?: string;
 };
 
 type GenerationView = {
@@ -52,6 +55,16 @@ type RoleTerm = {
   label: string;
   category: string;
   categoryLabel: string;
+  people: number;
+  views: GenerationView[];
+};
+
+type HistoricalContext = {
+  slug: string;
+  label: string;
+  kind: string;
+  period: string;
+  description: string;
   people: number;
   views: GenerationView[];
 };
@@ -113,7 +126,10 @@ function PeopleGrid({
           <article className="place-person" key={person.id}>
             <div className="place-person-topline">
               <span>G{person.generation}</span>
-              <span>{person.featured ? "Conexão histórica" : "Mais documentada"}</span>
+              <span>
+                {person.association ??
+                  (person.featured ? "Conexão histórica" : "Mais documentada")}
+              </span>
             </div>
             <h4>{person.name}</h4>
             {person.description && <p>{person.description}</p>}
@@ -200,6 +216,25 @@ export default function PlacesExplorer() {
     [maxGeneration, normalizedQuery],
   );
 
+  const historicalContexts = useMemo(
+    () =>
+      (explorer.historicalContexts as HistoricalContext[])
+        .map((entry) => ({
+          ...entry,
+          current: currentView(entry.views, maxGeneration),
+        }))
+        .filter(
+          (entry) =>
+            entry.current.people > 0 &&
+            matchesQuery(
+              normalizedQuery,
+              [entry.label, entry.kind, entry.period, entry.description],
+              entry.current.representatives,
+            ),
+        ),
+    [maxGeneration, normalizedQuery],
+  );
+
   const topCountry = Math.max(...countries.map((entry) => entry.current.people), 1);
   const topCategory = Math.max(...categories.map((entry) => entry.current.people), 1);
 
@@ -211,7 +246,7 @@ export default function PlacesExplorer() {
         <label className="places-search">
           <Search size={18} aria-hidden="true" />
           <span className="sr-only">
-            Pesquisar país, papel, ocupação, título ou pessoa
+            Pesquisar país, acontecimento, ordem, ocupação ou pessoa
           </span>
           <input
             value={query}
@@ -219,7 +254,7 @@ export default function PlacesExplorer() {
               setQuery(event.target.value);
               setOpenItem(null);
             }}
-            placeholder="Pesquisar país, papel, ocupação ou pessoa"
+            placeholder="Pesquisar país, ordem, guerra, ocupação ou pessoa"
             type="search"
           />
         </label>
@@ -242,6 +277,7 @@ export default function PlacesExplorer() {
 
         <nav className="explore-jumps" aria-label="Seções do dashboard">
           <a href="#paises">Países</a>
+          <a href="#historia">História</a>
           <a href="#papeis">Papéis</a>
           <a href="#ocupacoes">Ocupações</a>
         </nav>
@@ -251,6 +287,10 @@ export default function PlacesExplorer() {
         <div>
           <strong>{number.format(countries.length)}</strong>
           <span>países e territórios</span>
+        </div>
+        <div>
+          <strong>{number.format(historicalContexts.length)}</strong>
+          <span>contextos históricos</span>
         </div>
         <div>
           <strong>{number.format(categories.length)}</strong>
@@ -338,6 +378,80 @@ export default function PlacesExplorer() {
             <Globe2 size={24} aria-hidden="true" />
             <h3>Nenhum país encontrado</h3>
             <p>Tente outro termo ou selecione uma geração mais ampla.</p>
+          </div>
+        )}
+      </section>
+
+      <section
+        className="dashboard-section history-section"
+        id="historia"
+        aria-labelledby="history-heading"
+      >
+        <div className="dashboard-heading">
+          <div>
+            <Landmark size={22} aria-hidden="true" />
+            <div>
+              <p>A família dentro da História</p>
+              <h2 id="history-heading">Ordens e acontecimentos históricos</h2>
+            </div>
+          </div>
+          <p>
+            Ordens militares, conflitos e instituições mencionados em títulos,
+            funções, acontecimentos ou notas associados aos perfis.
+          </p>
+        </div>
+
+        {historicalContexts.length ? (
+          <div className="history-grid">
+            {historicalContexts.map((entry) => {
+              const key = `history:${entry.slug}`;
+              const isOpen = openItem === key;
+              return (
+                <article
+                  className={`history-card ${isOpen ? "open" : ""}`}
+                  key={entry.slug}
+                >
+                  <button
+                    aria-expanded={isOpen}
+                    onClick={() => toggle(key)}
+                    type="button"
+                  >
+                    <span className="history-card-icon">
+                      <HistoryIcon context={entry.slug} size={21} />
+                    </span>
+                    <span className="history-card-copy">
+                      <span>
+                        <small>{entry.kind}</small>
+                        <small>{entry.period}</small>
+                      </span>
+                      <strong>{entry.label}</strong>
+                      <span>{entry.description}</span>
+                    </span>
+                    <span className="history-card-count">
+                      <strong>{number.format(entry.current.people)}</strong>
+                      <small>perfis associados</small>
+                    </span>
+                    <ChevronDown
+                      className="place-chevron"
+                      size={19}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  {isOpen && (
+                    <PeopleGrid
+                      people={entry.current.representatives}
+                      context={entry.label}
+                    />
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="places-empty">
+            <Landmark size={24} aria-hidden="true" />
+            <h3>Nenhum contexto histórico encontrado</h3>
+            <p>Tente outro termo ou amplie o recorte de gerações.</p>
           </div>
         )}
       </section>
@@ -468,8 +582,8 @@ export default function PlacesExplorer() {
 
       <p className="places-note">
         Uma pessoa pode aparecer em mais de uma categoria quando acumulou
-        títulos ou funções. A classificação é uma leitura automatizada dos
-        campos do GEDCOM e preserva o texto original nos detalhes.
+        títulos, funções ou menções históricas. A classificação preserva nos
+        detalhes o trecho original associado ao perfil.
       </p>
     </section>
   );

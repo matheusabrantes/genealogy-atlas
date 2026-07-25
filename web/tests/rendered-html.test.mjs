@@ -39,6 +39,9 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /3\.778/);
   assert.doesNotMatch(html, /7\.666/);
   assert.match(html, /Papéis que atravessam a árvore/);
+  assert.match(html, /A família dentro da História/);
+  assert.match(html, /Familiares e agentes do Santo Ofício/);
+  assert.match(html, /Ordem dos Templários/);
   assert.match(html, /Realeza e nobreza/);
   assert.match(html, /3\.007/);
   for (const flag of [
@@ -58,18 +61,21 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /Explorar a árvore/);
 });
 
-test("oferece dashboard de países e papéis por geração", async () => {
+test("oferece dashboard de países, história e papéis por geração", async () => {
   const response = await render("/lugares");
   assert.equal(response.status, 200);
 
   const html = await response.text();
   assert.match(html, /Explorar a árvore/);
-  assert.match(html, /Pesquisar país, papel, ocupação ou pessoa/);
+  assert.match(html, /Pesquisar país, ordem, guerra, ocupação ou pessoa/);
   assert.match(html, />Geral</);
   assert.match(html, />G4</);
   assert.match(html, /França/);
   assert.match(html, /Sacro Império Romano-Germânico/);
   assert.match(html, /Papéis e ocupações/);
+  assert.match(html, /Ordens e acontecimentos históricos/);
+  assert.match(html, /Inquisição e Santo Ofício/);
+  assert.match(html, /Batalha de Aljubarrota/);
   assert.match(html, /Ocupações e títulos específicos/);
   assert.match(html, /Realeza e nobreza/);
 });
@@ -109,8 +115,22 @@ test("inclui todos os países conhecidos no explorador compacto", async () => {
   assert.ok(places.roleTerms.length > 20);
   assert.equal(places.roleStats.peopleWithRecordedRoles, 4605);
   assert.equal(places.roleStats.peopleClassified, 3423);
+  assert.equal(places.historyStats.contexts, 13);
+  assert.equal(places.historicalContexts.length, 13);
+  assert.equal(
+    places.historicalContexts.find((entry) => entry.slug === "inquisition-agents").people,
+    9,
+  );
+  assert.equal(
+    places.historicalContexts.find((entry) => entry.slug === "templars").people,
+    68,
+  );
   assert.ok(
-    [...places.roleCategories, ...places.roleTerms].every((entry) =>
+    [
+      ...places.roleCategories,
+      ...places.roleTerms,
+      ...places.historicalContexts,
+    ].every((entry) =>
       entry.views.every((view) => view.representatives.length <= 5),
     ),
   );

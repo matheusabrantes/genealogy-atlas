@@ -6,7 +6,7 @@ import PlacesExplorer from "./places-explorer";
 export const metadata: Metadata = {
   title: "Explorar a árvore",
   description:
-    "Explore países, papéis, ocupações, títulos e pessoas da árvore familiar por geração.",
+    "Explore países, acontecimentos históricos, ordens, ocupações, títulos e pessoas da árvore familiar por geração.",
 };
 
 export default function PlacesPage() {
@@ -27,8 +27,8 @@ export default function PlacesPage() {
           </div>
         </div>
         <p className="places-intro">
-          Um único filtro para atravessar países, papéis, ocupações, títulos e
-          pessoas ao longo das gerações.
+          Um único filtro para atravessar países, ordens, guerras, Inquisição,
+          ocupações, títulos e pessoas ao longo das gerações.
         </p>
       </header>
       <PlacesExplorer />

@@ -2,6 +2,7 @@ import unittest
 
 from mygenealogy.analytics import (
     build_analytics,
+    build_history_explorer,
     build_places_explorer,
     build_roles_explorer,
 )
@@ -28,6 +29,7 @@ GEDCOM = """0 HEAD
 1 DEAT
 2 DATE 2024
 1 OCCU Ferreiro
+1 TITL Familiar do Santo Ofício
 0 @F1@ FAM
 1 HUSB @I2@
 1 CHIL @I1@
@@ -109,10 +111,26 @@ class AnalyticsTests(unittest.TestCase):
         )
         self.assertEqual(trades["people"], 1)
         self.assertEqual(blacksmith["people"], 1)
-        self.assertEqual(
+        self.assertIn(
+            "Ferreiro",
             blacksmith["views"][0]["representatives"][0]["roleTexts"],
-            ["Ferreiro"],
         )
+
+    def test_builds_historical_context_with_original_evidence(self):
+        records = parse_lines(GEDCOM.splitlines())
+        summary, graph = build_analytics(records, "TEST-ROOT")
+        history = build_history_explorer(records, summary, graph)
+
+        agents = next(
+            item
+            for item in history["historicalContexts"]
+            if item["slug"] == "inquisition-agents"
+        )
+        self.assertEqual(agents["people"], 1)
+        representative = agents["views"][0]["representatives"][0]
+        self.assertEqual(representative["name"], "Avô Falecido")
+        self.assertEqual(representative["association"], "Registro em título ou função")
+        self.assertEqual(representative["roleTexts"], ["Familiar do Santo Ofício"])
 
 
 if __name__ == "__main__":
