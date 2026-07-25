@@ -31,7 +31,9 @@ test("renderiza a página inicial em pt-BR", async () => {
   const html = await response.text();
   assert.match(html, /Raízes Abrantes/);
   assert.match(html, /Uma família/);
-  assert.match(html, /Quem foi a mãe de Joana/);
+  assert.match(html, /Top 10 conexões históricas/);
+  assert.match(html, /Guilherme, o Conquistador/);
+  assert.doesNotMatch(html, /Quem foi a mãe de Joana/);
   assert.match(html, /Explorar a árvore/);
 });
 

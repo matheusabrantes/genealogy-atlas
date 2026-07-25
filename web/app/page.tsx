@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
-  BookOpenCheck,
   Globe2,
   Network,
   ShieldCheck,
@@ -13,7 +12,7 @@ import summary from "../public/data/tree-summary.json";
 export const metadata: Metadata = {
   title: "Raízes Abrantes — nossa história em rede",
   description:
-    "Uma leitura visual da família Abrantes: gerações, lugares, pessoas e pesquisas ainda em andamento.",
+    "Uma leitura visual da família Abrantes: gerações, lugares, pessoas e conexões históricas.",
 };
 
 const number = new Intl.NumberFormat("pt-BR");
@@ -54,7 +53,6 @@ export default function Home() {
         <nav aria-label="Navegação principal">
           <a href="#panorama">Panorama</a>
           <a href="#pessoas">Pessoas</a>
-          <a href="#pesquisa">Pesquisa atual</a>
           <Link className="nav-action" href="/arvore">
             Abrir árvore
           </Link>
@@ -78,8 +76,8 @@ export default function Home() {
               Explorar a árvore
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <a className="button button-quiet" href="#pesquisa">
-              Ver pesquisa em andamento
+            <a className="button button-quiet" href="#pessoas">
+              Ver conexões históricas
             </a>
           </div>
         </div>
@@ -144,7 +142,7 @@ export default function Home() {
         <div className="section-heading people-heading">
           <div>
             <Sparkles size={24} aria-hidden="true" />
-            <h2 id="people-title">Conexões históricas em destaque</h2>
+            <h2 id="people-title">Top 10 conexões históricas</h2>
           </div>
           <p>
             Pessoas reconhecíveis encontradas nas linhas históricas da árvore
@@ -152,16 +150,21 @@ export default function Home() {
           </p>
         </div>
         <div className="people-list">
-          {summary.featuredPeople.map((person) => (
+          {summary.featuredPeople.slice(0, 10).map((person) => (
             <article className="person-row" key={person.id}>
-              <div className="person-generation">G{person.generation}</div>
+              <div
+                className="person-generation"
+                aria-label={`Posição ${person.rank}`}
+              >
+                {String(person.rank).padStart(2, "0")}
+              </div>
               <div className="person-copy">
                 <h3>{person.label}</h3>
                 <p>{person.description}</p>
               </div>
               <div className="person-dates">
                 <span>{person.birthYear ?? "?"}—{person.deathYear ?? "?"}</span>
-                <span>{person.sourceCount} fontes</span>
+                <span>G{person.generation} · {person.sourceCount} fontes</span>
               </div>
               <span className="status status-review">
                 <Network size={15} aria-hidden="true" />
@@ -169,38 +172,6 @@ export default function Home() {
               </span>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="research-section" id="pesquisa" aria-labelledby="research-title">
-        <div className="research-intro">
-          <span className="status status-hypothesis">Hipótese principal</span>
-          <h2 id="research-title">{summary.researchFocus.title}</h2>
-          <p>
-            A candidata mais forte é <strong>{summary.researchFocus.candidate}</strong>,
-            mas ainda falta o documento que conecte os dois núcleos familiares.
-          </p>
-          <a
-            className="inline-link"
-            href={`https://www.familysearch.org/pt/tree/person/details/${summary.researchFocus.familySearchId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Ver perfil no FamilySearch
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
-        </div>
-        <div className="research-evidence">
-          <div>
-            <BookOpenCheck size={21} aria-hidden="true" />
-            <h3>O que sustenta a hipótese</h3>
-          </div>
-          <ul>
-            {summary.researchFocus.evidence.map((evidence) => (
-              <li key={evidence}>{evidence}</li>
-            ))}
-          </ul>
-          <p className="missing-bridge">{summary.researchFocus.missing}</p>
         </div>
       </section>
 

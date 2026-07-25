@@ -55,29 +55,55 @@ COUNTRY_ALIASES = {
 }
 
 FEATURED = {
-    "9HKC-FP8": {
-        "label": "Dom João I de Portugal",
-        "description": "Rei de Portugal e fundador da dinastia de Avis.",
+    "9H17-VTZ": {
+        "rank": 1,
+        "label": "Guilherme, o Conquistador",
+        "description": "Duque da Normandia que conquistou a Inglaterra em 1066 e se tornou seu primeiro rei normando.",
     },
-    "GWSV-FP7": {
-        "label": "Lopo de Almeida",
-        "description": "1º conde de Abrantes; elo histórico do sobrenome.",
+    "9C8T-V1R": {
+        "rank": 2,
+        "label": "Leonor da Aquitânia",
+        "description": "Duquesa da Aquitânia, rainha da França e depois da Inglaterra; uma das mulheres mais influentes da Europa medieval.",
     },
-    "KK1Y-QLM": {
-        "label": "João de Almeida",
-        "description": "2º conde de Abrantes.",
+    "LYD7-TB9": {
+        "rank": 3,
+        "label": "Henrique II da Inglaterra",
+        "description": "Primeiro rei Plantageneta da Inglaterra, conhecido por reformas jurídicas e por governar um vasto domínio europeu.",
+    },
+    "93RN-C7J": {
+        "rank": 4,
+        "label": "Eduardo III da Inglaterra",
+        "description": "Rei inglês por cinco décadas, figura central no início da Guerra dos Cem Anos e fundador da Ordem da Jarreteira.",
     },
     "GWZX-F4D": {
+        "rank": 5,
         "label": "John of Gaunt",
-        "description": "1º duque de Lancaster.",
+        "description": "Filho de Eduardo III, 1º duque de Lancaster e ancestral da dinastia lancastriana da Inglaterra.",
     },
     "9Z8W-FY1": {
+        "rank": 6,
         "label": "Philippa de Hainaut",
-        "description": "Rainha consorte da Inglaterra.",
+        "description": "Rainha consorte da Inglaterra, esposa de Eduardo III e mãe de uma geração decisiva para as dinastias inglesas.",
+    },
+    "9HKC-FP8": {
+        "rank": 7,
+        "label": "Dom João I de Portugal",
+        "description": "Rei que consolidou a independência portuguesa e fundou a dinastia de Avis após a crise de 1383–1385.",
     },
     "LTKD-XJF": {
+        "rank": 8,
         "label": "Afonso IV de Portugal",
-        "description": "Rei de Portugal no século XIV.",
+        "description": "Sétimo rei de Portugal, associado à Batalha do Salado e ao episódio histórico de Inês de Castro.",
+    },
+    "GWSV-FP7": {
+        "rank": 9,
+        "label": "Lopo de Almeida",
+        "description": "Conselheiro da Coroa e 1º conde de Abrantes, título concedido por Afonso V de Portugal.",
+    },
+    "KK1Y-QLM": {
+        "rank": 10,
+        "label": "João de Almeida",
+        "description": "2º conde de Abrantes, responsável por dar continuidade à Casa de Abrantes no final do século XV.",
     },
 }
 
@@ -233,7 +259,7 @@ def build_analytics(records: List[Node], root_fsid: str) -> Tuple[dict, dict]:
             }
         )
 
-    featured.sort(key=lambda item: (item["generation"], item["label"]))
+    featured.sort(key=lambda item: item["rank"])
     summary = {
         "snapshotRoot": "private",
         "people": len(people),
@@ -256,19 +282,6 @@ def build_analytics(records: List[Node], root_fsid: str) -> Tuple[dict, dict]:
             for place, count in places.most_common(12)
         ],
         "featuredPeople": featured,
-        "researchFocus": {
-            "title": "Quem foi a mãe de Joana?",
-            "candidate": "Maria de Abrantes Sarmento",
-            "familySearchId": "KGFQ-XC2",
-            "status": "Hipótese principal — ainda não comprovada",
-            "confidence": "moderada a alta",
-            "evidence": [
-                "Nascimento em 22 de dezembro de 1894 e batismo em Sousa, Paraíba.",
-                "Filha documentada de Manoel de Abrantes Sarmento e Maria Soares de Sá.",
-                "Nome e região compatíveis com a memória familiar de Joana.",
-            ],
-            "missing": "Falta um documento que a ligue a Francisco Matias de Almeida ou a um dos filhos do casal.",
-        },
         "privacy": {
             "livingPeopleRedacted": True,
             "message": "Nomes de pessoas potencialmente vivas são ocultados na saída compartilhável.",
