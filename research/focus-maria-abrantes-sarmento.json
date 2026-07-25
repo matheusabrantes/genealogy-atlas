@@ -1,0 +1,31 @@
+{
+  "subject": {
+    "name": "Maria de Abrantes Sarmento",
+    "familySearchId": "KGFQ-XC2",
+    "birth": "22 de dezembro de 1894",
+    "baptism": "20 de janeiro de 1895, Sousa, Paraíba, Brasil"
+  },
+  "hypothesis": "Maria de Abrantes Sarmento pode ser a mãe de Joana (pessoa privada).",
+  "status": "possível",
+  "confidence": "moderada a alta",
+  "confirmed": [
+    "Maria era filha de Manoel de Abrantes Sarmento e Maria Soares de Sá.",
+    "A filiação está registrada no batismo indexado como XJC2-DKS."
+  ],
+  "indirectEvidence": [
+    "O nome coincide com Maria Abrantes Sarmento, lembrada como mãe de Joana.",
+    "Joana relatava ter usado Sá e Sarmento em seu nome.",
+    "Sousa integra o corredor regional da família entre Paraíba e Ceará.",
+    "A cronologia permite que Maria, nascida em 1894, fosse mãe de Joana."
+  ],
+  "missingBridge": [
+    "Casamento de Maria com Francisco Matias de Almeida.",
+    "Nascimento ou batismo de Joana ou de um irmão nomeando os avós maternos.",
+    "Óbito de Maria identificando marido, pais ou filhos."
+  ],
+  "doNotDoYet": [
+    "Não ligar KGFQ-XC2 como mãe de Joana no FamilySearch sem a ponte documental.",
+    "Não fundir esta candidata com outra Maria somente por nome e localidade."
+  ],
+  "updatedAt": "2026-07-25"
+}

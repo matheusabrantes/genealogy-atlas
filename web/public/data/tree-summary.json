@@ -1,0 +1,323 @@
+{
+  "snapshotRoot": "private",
+  "people": 16148,
+  "reachableAncestors": 15547,
+  "families": 8652,
+  "sources": 45694,
+  "notes": 49050,
+  "maxGeneration": 32,
+  "oldestBirthYear": 563,
+  "generationCounts": [
+    {
+      "generation": 0,
+      "people": 1
+    },
+    {
+      "generation": 1,
+      "people": 2
+    },
+    {
+      "generation": 2,
+      "people": 4
+    },
+    {
+      "generation": 3,
+      "people": 4
+    },
+    {
+      "generation": 4,
+      "people": 2
+    },
+    {
+      "generation": 5,
+      "people": 2
+    },
+    {
+      "generation": 6,
+      "people": 4
+    },
+    {
+      "generation": 7,
+      "people": 4
+    },
+    {
+      "generation": 8,
+      "people": 8
+    },
+    {
+      "generation": 9,
+      "people": 8
+    },
+    {
+      "generation": 10,
+      "people": 11
+    },
+    {
+      "generation": 11,
+      "people": 12
+    },
+    {
+      "generation": 12,
+      "people": 20
+    },
+    {
+      "generation": 13,
+      "people": 36
+    },
+    {
+      "generation": 14,
+      "people": 61
+    },
+    {
+      "generation": 15,
+      "people": 87
+    },
+    {
+      "generation": 16,
+      "people": 96
+    },
+    {
+      "generation": 17,
+      "people": 122
+    },
+    {
+      "generation": 18,
+      "people": 150
+    },
+    {
+      "generation": 19,
+      "people": 197
+    },
+    {
+      "generation": 20,
+      "people": 243
+    },
+    {
+      "generation": 21,
+      "people": 360
+    },
+    {
+      "generation": 22,
+      "people": 458
+    },
+    {
+      "generation": 23,
+      "people": 616
+    },
+    {
+      "generation": 24,
+      "people": 808
+    },
+    {
+      "generation": 25,
+      "people": 982
+    },
+    {
+      "generation": 26,
+      "people": 1119
+    },
+    {
+      "generation": 27,
+      "people": 1270
+    },
+    {
+      "generation": 28,
+      "people": 1415
+    },
+    {
+      "generation": 29,
+      "people": 1600
+    },
+    {
+      "generation": 30,
+      "people": 1745
+    },
+    {
+      "generation": 31,
+      "people": 1948
+    },
+    {
+      "generation": 32,
+      "people": 2152
+    }
+  ],
+  "countries": [
+    {
+      "country": "França",
+      "events": 7666
+    },
+    {
+      "country": "Portugal",
+      "events": 6189
+    },
+    {
+      "country": "Espanha",
+      "events": 4543
+    },
+    {
+      "country": "Inglaterra",
+      "events": 1986
+    },
+    {
+      "country": "Países Baixos",
+      "events": 1273
+    },
+    {
+      "country": "Escócia",
+      "events": 1234
+    },
+    {
+      "country": "Alemanha",
+      "events": 1017
+    },
+    {
+      "country": "Itália",
+      "events": 981
+    },
+    {
+      "country": "Bélgica",
+      "events": 543
+    },
+    {
+      "country": "Brasil",
+      "events": 250
+    },
+    {
+      "country": "Reino Unido",
+      "events": 173
+    },
+    {
+      "country": "País de Gales",
+      "events": 164
+    }
+  ],
+  "places": [
+    {
+      "place": "Portugal",
+      "events": 2599
+    },
+    {
+      "place": "France",
+      "events": 657
+    },
+    {
+      "place": "Spain",
+      "events": 537
+    },
+    {
+      "place": "Europe",
+      "events": 377
+    },
+    {
+      "place": "España",
+      "events": 331
+    },
+    {
+      "place": "Scotland",
+      "events": 272
+    },
+    {
+      "place": "Espanha",
+      "events": 205
+    },
+    {
+      "place": "England",
+      "events": 192
+    },
+    {
+      "place": "Normandy, France",
+      "events": 141
+    },
+    {
+      "place": "Lisboa, Portugal",
+      "events": 126
+    },
+    {
+      "place": "Italy",
+      "events": 124
+    },
+    {
+      "place": "Funchal, Madeira, Portugal",
+      "events": 119
+    }
+  ],
+  "featuredPeople": [
+    {
+      "id": "9HKC-FP8",
+      "label": "Dom João I de Portugal",
+      "description": "Rei de Portugal e fundador da dinastia de Avis.",
+      "generation": 20,
+      "birthYear": 1357,
+      "deathYear": 1433,
+      "sourceCount": 33,
+      "status": "Conexão importada — requer verificação documental"
+    },
+    {
+      "id": "KK1Y-QLM",
+      "label": "João de Almeida",
+      "description": "2º conde de Abrantes.",
+      "generation": 20,
+      "birthYear": 1443,
+      "deathYear": 1512,
+      "sourceCount": 0,
+      "status": "Conexão importada — requer verificação documental"
+    },
+    {
+      "id": "GWZX-F4D",
+      "label": "John of Gaunt",
+      "description": "1º duque de Lancaster.",
+      "generation": 21,
+      "birthYear": 1340,
+      "deathYear": 1399,
+      "sourceCount": 35,
+      "status": "Conexão importada — requer verificação documental"
+    },
+    {
+      "id": "GWSV-FP7",
+      "label": "Lopo de Almeida",
+      "description": "1º conde de Abrantes; elo histórico do sobrenome.",
+      "generation": 21,
+      "birthYear": 1416,
+      "deathYear": 1486,
+      "sourceCount": 3,
+      "status": "Conexão importada — requer verificação documental"
+    },
+    {
+      "id": "LTKD-XJF",
+      "label": "Afonso IV de Portugal",
+      "description": "Rei de Portugal no século XIV.",
+      "generation": 22,
+      "birthYear": 1291,
+      "deathYear": 1357,
+      "sourceCount": 9,
+      "status": "Conexão importada — requer verificação documental"
+    },
+    {
+      "id": "9Z8W-FY1",
+      "label": "Philippa de Hainaut",
+      "description": "Rainha consorte da Inglaterra.",
+      "generation": 22,
+      "birthYear": 1313,
+      "deathYear": 1369,
+      "sourceCount": 46,
+      "status": "Conexão importada — requer verificação documental"
+    }
+  ],
+  "researchFocus": {
+    "title": "Quem foi a mãe de Joana?",
+    "candidate": "Maria de Abrantes Sarmento",
+    "familySearchId": "KGFQ-XC2",
+    "status": "Hipótese principal — ainda não comprovada",
+    "confidence": "moderada a alta",
+    "evidence": [
+      "Nascimento em 22 de dezembro de 1894 e batismo em Sousa, Paraíba.",
+      "Filha documentada de Manoel de Abrantes Sarmento e Maria Soares de Sá.",
+      "Nome e região compatíveis com a memória familiar de Joana."
+    ],
+    "missing": "Falta um documento que a ligue a Francisco Matias de Almeida ou a um dos filhos do casal."
+  },
+  "privacy": {
+    "livingPeopleRedacted": true,
+    "message": "Nomes de pessoas potencialmente vivas são ocultados na saída compartilhável."
+  }
+}

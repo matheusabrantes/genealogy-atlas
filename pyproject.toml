@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mygenealogy"
+version = "0.1.0"
+description = "Local GEDCOM validation tools for Brazilian family-history research"
+requires-python = ">=3.9"
+
+[project.scripts]
+mygenealogy = "mygenealogy.cli:main"
+
+[tool.setuptools]
+packages = ["mygenealogy"]
+

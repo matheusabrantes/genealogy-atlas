@@ -1,0 +1,4 @@
+# External GPL-3.0 tool, installed only in an isolated local environment.
+# Pinned to the reviewed upstream revision from 2026-05-21.
+getmyancestors @ git+https://github.com/Linekio/getmyancestors.git@1ffc7330a3b85ee98ad8c79eef36fb790c87b3d1
+
