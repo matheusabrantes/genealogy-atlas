@@ -402,10 +402,14 @@ h1 {
 }
 
 .country-flag {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 3px;
   box-shadow: 0 0 0 1px color-mix(in oklch, var(--ink) 18%, transparent);
   flex: 0 0 auto;
-  font-size: 1.1rem;
+  height: 1rem;
+  width: 1.35rem;
 }
 .country-track { background: var(--surface-strong); height: 7px; overflow: hidden; }
 .country-track span { background: var(--primary); display: block; height: 100%; }

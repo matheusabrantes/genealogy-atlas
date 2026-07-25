@@ -34,8 +34,7 @@ test("renderiza a página inicial em pt-BR", async () => {
   assert.match(html, /Top 10 conexões históricas/);
   assert.match(html, /Guilherme, o Conquistador/);
   assert.doesNotMatch(html, /Quem foi a mãe de Joana/);
-  assert.match(html, /fi-fr/);
-  assert.match(html, /fi-pt/);
+  assert.match(html, /country-flag/);
   assert.match(html, /Explorar a árvore/);
 });
 
