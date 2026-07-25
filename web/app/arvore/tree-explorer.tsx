@@ -2,9 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Search, ZoomIn, ZoomOut, Maximize2, LoaderCircle } from "lucide-react";
-import Graph from "graphology";
-import Sigma from "sigma";
-import type { Attributes } from "graphology-types";
 import "./tree.css";
 
 type TreeNode = {
@@ -43,7 +40,7 @@ function colorForGeneration(generation: number) {
 
 export default function TreeExplorer() {
   const container = useRef<HTMLDivElement>(null);
-  const sigma = useRef<Sigma<Attributes, Attributes> | null>(null);
+  const sigma = useRef<import("sigma").default | null>(null);
   const [data, setData] = useState<TreeData | null>(null);
   const [maxGeneration, setMaxGeneration] = useState(12);
   const [query, setQuery] = useState("");
@@ -64,47 +61,56 @@ export default function TreeExplorer() {
 
   useEffect(() => {
     if (!data || !container.current) return;
-    const graph = new Graph();
-    const visible = data.nodes.filter((node) => node.generation <= maxGeneration);
-    const visibleIds = new Set(visible.map((node) => node.id));
+    let cancelled = false;
 
-    visible.forEach((node) => {
-      const spread = Math.max(1, Math.pow(node.generation + 1, 1.45));
-      const jitter = ((hash(node.id) % 10000) / 10000 - 0.5) * spread;
-      graph.addNode(node.id, {
-        x: node.generation * 2.4,
-        y: jitter,
-        size: node.generation === 0 ? 11 : Math.max(2.2, 6.4 - node.generation * 0.15),
-        label: node.name,
-        color: colorForGeneration(node.generation),
-      });
-    });
+    void Promise.all([import("graphology"), import("sigma")]).then(
+      ([graphologyModule, sigmaModule]) => {
+        if (cancelled || !container.current) return;
+        const Graph = graphologyModule.default;
+        const Sigma = sigmaModule.default;
+        const graph = new Graph();
+        const visible = data.nodes.filter((node) => node.generation <= maxGeneration);
+        const visibleIds = new Set(visible.map((node) => node.id));
 
-    data.edges.forEach((edge, index) => {
-      if (visibleIds.has(edge.source) && visibleIds.has(edge.target)) {
-        graph.addEdgeWithKey(`e-${index}`, edge.source, edge.target, {
-          color: "oklch(0.78 0.025 174)",
-          size: 0.55,
+        visible.forEach((node) => {
+          const spread = Math.max(1, Math.pow(node.generation + 1, 1.45));
+          const jitter = ((hash(node.id) % 10000) / 10000 - 0.5) * spread;
+          graph.addNode(node.id, {
+            x: node.generation * 2.4,
+            y: jitter,
+            size: node.generation === 0 ? 11 : Math.max(2.2, 6.4 - node.generation * 0.15),
+            label: node.name,
+            color: colorForGeneration(node.generation),
+          });
         });
-      }
-    });
 
-    sigma.current?.kill();
-    sigma.current = new Sigma(graph, container.current, {
-      allowInvalidContainer: true,
-      defaultEdgeType: "line",
-      labelColor: { color: "oklch(0.22 0.035 174)" },
-      labelFont: "Manrope",
-      labelRenderedSizeThreshold: 7,
-      renderEdgeLabels: false,
-      zIndex: true,
-    });
+        data.edges.forEach((edge, index) => {
+          if (visibleIds.has(edge.source) && visibleIds.has(edge.target)) {
+            graph.addEdgeWithKey(`e-${index}`, edge.source, edge.target, {
+              color: "oklch(0.78 0.025 174)",
+              size: 0.55,
+            });
+          }
+        });
 
-    sigma.current.on("clickNode", ({ node }) => {
-      setSelected(nodeById.get(node) ?? null);
-    });
+        sigma.current?.kill();
+        sigma.current = new Sigma(graph, container.current, {
+          allowInvalidContainer: true,
+          defaultEdgeType: "line",
+          labelColor: { color: "oklch(0.22 0.035 174)" },
+          labelFont: "Manrope",
+          labelRenderedSizeThreshold: 7,
+          renderEdgeLabels: false,
+          zIndex: true,
+        });
+
+        sigma.current.on("clickNode", ({ node }) => {
+          setSelected(nodeById.get(node) ?? null);
+        });
+      });
 
     return () => {
+      cancelled = true;
       sigma.current?.kill();
       sigma.current = null;
     };
