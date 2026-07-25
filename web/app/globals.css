@@ -387,7 +387,26 @@ h1 {
 
 .country-row:last-child { border-bottom: 1px solid var(--line); }
 .country-rank { color: var(--muted); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
-.country-name { font-weight: 700; }
+.country-name {
+  align-items: center;
+  display: flex;
+  font-weight: 700;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.country-name > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.country-flag {
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--ink) 18%, transparent);
+  flex: 0 0 auto;
+  font-size: 1.1rem;
+}
 .country-track { background: var(--surface-strong); height: 7px; overflow: hidden; }
 .country-track span { background: var(--primary); display: block; height: 100%; }
 .country-row strong { font-size: 0.875rem; font-variant-numeric: tabular-nums; text-align: right; }

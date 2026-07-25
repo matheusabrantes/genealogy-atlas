@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
+import "flag-icons/css/flag-icons.min.css";
 import "./globals.css";
 
 const manrope = Manrope({

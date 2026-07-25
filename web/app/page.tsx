@@ -17,6 +17,21 @@ export const metadata: Metadata = {
 
 const number = new Intl.NumberFormat("pt-BR");
 
+const countryFlags: Record<string, string> = {
+  Alemanha: "de",
+  Bélgica: "be",
+  Brasil: "br",
+  Espanha: "es",
+  Escócia: "gb-sct",
+  França: "fr",
+  Inglaterra: "gb-eng",
+  Itália: "it",
+  Portugal: "pt",
+  "País de Gales": "gb-wls",
+  "Países Baixos": "nl",
+  "Reino Unido": "gb",
+};
+
 function GenerationRibbon() {
   const visible = summary.generationCounts.filter(
     ({ generation }) => generation <= 22 && generation % 2 === 0,
@@ -124,7 +139,15 @@ export default function Home() {
           {summary.countries.slice(0, 8).map(({ country, events }, index) => (
             <div className="country-row" key={country}>
               <span className="country-rank">{String(index + 1).padStart(2, "0")}</span>
-              <span className="country-name">{country}</span>
+              <span className="country-name">
+                {countryFlags[country] && (
+                  <span
+                    className={`country-flag fi fi-${countryFlags[country]}`}
+                    aria-hidden="true"
+                  />
+                )}
+                <span>{country}</span>
+              </span>
               <div className="country-track" aria-hidden="true">
                 <span style={{ width: `${(events / topCountry) * 100}%` }} />
               </div>
