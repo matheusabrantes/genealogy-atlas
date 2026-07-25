@@ -50,6 +50,24 @@ class AnalyticsTests(unittest.TestCase):
         self.assertEqual(len(graph["edges"]), 2)
         self.assertTrue(all("TEST-ROOT" not in edge.values() for edge in graph["edges"]))
 
+    def test_can_publish_only_the_root_name(self):
+        _, graph = build_analytics(
+            parse_lines(GEDCOM.splitlines()),
+            "TEST-ROOT",
+            "Matheus Abrantes",
+        )
+
+        root = next(node for node in graph["nodes"] if node["generation"] == 0)
+        other_private = [
+            node
+            for node in graph["nodes"]
+            if node["private"] and node["generation"] != 0
+        ]
+
+        self.assertEqual(root["name"], "Matheus Abrantes")
+        self.assertTrue(root["private"])
+        self.assertEqual({node["name"] for node in other_private}, {"Pessoa privada"})
+
 
 if __name__ == "__main__":
     unittest.main()

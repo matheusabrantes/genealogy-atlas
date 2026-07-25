@@ -66,6 +66,7 @@ The resulting GEDCOM and validation report remain local and are ignored by Git.
 python3 -m mygenealogy.analytics \
   data/familysearch-snapshot.ged \
   --root-fsid ABCD-123 \
+  --published-root-name "Matheus Abrantes" \
   --summary web/public/data/tree-summary.json \
   --graph web/public/data/tree-graph.json
 ```

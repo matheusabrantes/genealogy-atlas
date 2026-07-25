@@ -167,7 +167,11 @@ def _ancestral_generations(
     return generations
 
 
-def build_analytics(records: List[Node], root_fsid: str) -> Tuple[dict, dict]:
+def build_analytics(
+    records: List[Node],
+    root_fsid: str,
+    published_root_name: Optional[str] = None,
+) -> Tuple[dict, dict]:
     people = {record.xref: record for record in records if record.tag == "INDI" and record.xref}
     families = {record.xref: record for record in records if record.tag == "FAM" and record.xref}
     root = next(
@@ -211,10 +215,17 @@ def build_analytics(records: List[Node], root_fsid: str) -> Tuple[dict, dict]:
         fsid = person.text("_FSFTID") or xref.strip("@")
         public_id = f"private-{private_index}" if private else fsid
         public_ids[xref] = public_id
+        public_name = (
+            published_root_name
+            if private and xref == root and published_root_name
+            else "Pessoa privada"
+            if private
+            else (_clean_name(person.text("NAME")) or "Nome desconhecido")
+        )
         graph_nodes.append(
             {
                 "id": public_id,
-                "name": "Pessoa privada" if private else (_clean_name(person.text("NAME")) or "Nome desconhecido"),
+                "name": public_name,
                 "generation": generations[xref],
                 "birthYear": birth_year,
                 "deathYear": death_year,
@@ -295,11 +306,19 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Create privacy-aware family-tree analytics")
     parser.add_argument("gedcom", type=Path)
     parser.add_argument("--root-fsid", required=True)
+    parser.add_argument(
+        "--published-root-name",
+        help="Public display name for the root person; other potentially living people remain anonymized.",
+    )
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--graph", type=Path, required=True)
     args = parser.parse_args()
 
-    summary, graph = build_analytics(read_gedcom(args.gedcom), args.root_fsid)
+    summary, graph = build_analytics(
+        read_gedcom(args.gedcom),
+        args.root_fsid,
+        args.published_root_name,
+    )
     args.summary.parent.mkdir(parents=True, exist_ok=True)
     args.graph.parent.mkdir(parents=True, exist_ok=True)
     args.summary.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
